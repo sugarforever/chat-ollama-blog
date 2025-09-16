@@ -1,0 +1,58 @@
+---
+import { formatDate, getLangFromUrl, useTranslations, type Locale } from '@/utils/i18n';
+import type { BlogPost } from '@/utils/blog';
+
+export interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+const lang = getLangFromUrl(Astro.url) as Locale;
+const t = useTranslations(lang);
+
+const href = lang === 'en' ? `/blog/${post.slug}` : `/zh/blog/${post.slug}`;
+---
+
+<article class="border border-gray-200 rounded-lg p-6 hover:border-gray-300 transition-colors">
+  <header class="mb-3">
+    <h2 class="text-xl font-semibold mb-2">
+      <a href={href} class="hover:text-gray-600 transition-colors">
+        {post.data.title}
+      </a>
+    </h2>
+
+    <div class="flex flex-wrap items-center gap-3 text-sm text-gray-600">
+      <time datetime={post.data.date.toISOString()}>
+        {formatDate(post.data.date, lang)}
+      </time>
+      {post.data.feature && (
+        <span class="px-2 py-1 bg-gray-100 rounded text-xs">
+          {post.data.feature}
+        </span>
+      )}
+      {post.data.timeToShip && (
+        <span class="px-2 py-1 bg-gray-100 rounded text-xs">
+          {post.data.timeToShip}
+        </span>
+      )}
+    </div>
+  </header>
+
+  {post.data.description && (
+    <p class="text-gray-700 mb-4 leading-relaxed">
+      {post.data.description}
+    </p>
+  )}
+
+  <footer>
+    <a
+      href={href}
+      class="inline-flex items-center text-sm font-medium hover:text-gray-600 transition-colors"
+    >
+      {t('blog.readMore')}
+      <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </footer>
+</article>

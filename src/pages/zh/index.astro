@@ -4,12 +4,12 @@ import BlogCard from '@/components/BlogCard.astro';
 import { getBlogPosts } from '@/utils/blog';
 import { useTranslations } from '@/utils/i18n';
 
-const t = useTranslations('en');
-const posts = await getBlogPosts('en');
+const t = useTranslations('zh');
+const posts = await getBlogPosts('zh');
 const latestPosts = posts.slice(0, 6);
 ---
 
-<BaseLayout title="ChatOllama Blog - Latest Updates">
+<BaseLayout title="ChatOllama 博客 - 最新更新">
   <div class="max-w-4xl mx-auto px-6 py-12">
     <header class="mb-12 text-center">
       <h1 class="text-5xl font-bold mb-4">{t('site.title')}</h1>
@@ -21,7 +21,7 @@ const latestPosts = posts.slice(0, 6);
       </p>
       <div class="mt-6">
         <a href="https://chatollama.cloud" target="_blank" class="inline-flex items-center px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors">
-          Try ChatOllama
+          体验 ChatOllama
           <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
           </svg>
@@ -32,7 +32,7 @@ const latestPosts = posts.slice(0, 6);
     <section>
       <div class="flex items-center justify-between mb-8">
         <h2 class="text-2xl font-semibold">{t('blog.latestPosts')}</h2>
-        <a href="/blog" class="text-sm font-medium hover:text-gray-600 transition-colors">
+        <a href="/zh/blog" class="text-sm font-medium hover:text-gray-600 transition-colors">
           {t('blog.allPosts')} →
         </a>
       </div>
