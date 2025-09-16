@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import type { SupportedLanguage } from '../../utils/posts';
+import { SUPPORTED_LANGUAGES, getPostsByLocale, getTranslation } from '../../utils/posts';
+
+export function getStaticPaths() {
+  return SUPPORTED_LANGUAGES.map((code) => ({
+    params: { lang: code },
+  }));
+}
+
+const { lang } = Astro.params;
+
+if (!lang || !SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage)) {
+  return Astro.redirect(`/${SUPPORTED_LANGUAGES[0]}/`);
+}
+
+const locale = lang as SupportedLanguage;
+const posts = await getPostsByLocale(locale);
+const translationPairs = new Map<string, string>();
+for (const post of posts) {
+  const translation = await getTranslation(post.slug, locale);
+  if (translation) {
+    translationPairs.set(post.slug, translation.url);
+  }
+}
+
+const languageLinks = SUPPORTED_LANGUAGES.map((code) => ({
+  lang: code,
+  href: `/${code}/`,
+  label: code === 'zh' ? '中文' : 'EN',
+  active: code === locale,
+}));
+
+const heroCopy =
+  locale === 'zh'
+    ? {
+        eyebrow: '工程日志',
+        title: '来自 Chat Ollama 的真实迭代故事',
+        blurb: '深入了解我们如何在多模态、智能代理和 UI 体验上快速迭代。',
+      }
+    : {
+        eyebrow: 'Engineering Log',
+        title: 'Stories from the Chat Ollama build room',
+        blurb: 'Peek behind the scenes as we iterate on multimodal models, agents, and product UX.',
+      };
+---
+<BaseLayout title={heroCopy.title} description={heroCopy.blurb} lang={locale} languageLinks={languageLinks}>
+  <section class="mb-16 flex flex-col gap-6">
+    <span class="text-xs uppercase tracking-[0.4em] text-muted">{heroCopy.eyebrow}</span>
+    <h1 class="text-4xl font-semibold text-surface md:text-5xl">{heroCopy.title}</h1>
+    <p class="max-w-2xl text-base text-muted">{heroCopy.blurb}</p>
+  </section>
+  <section class="grid gap-6 md:grid-cols-2">
+    {posts.map((post) => (
+      <PostCard post={post} translationHref={translationPairs.get(post.slug)} />
+    ))}
+  </section>
+</BaseLayout>

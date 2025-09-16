@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostLayout from '../../layouts/PostLayout.astro';
+import type { SupportedLanguage } from '../../utils/posts';
+import { SUPPORTED_LANGUAGES, mapEntryToPost, getTranslation, getAdjacentPosts, getAllPosts } from '../../utils/posts';
+import { getEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    params: { lang: post.lang, slug: post.slug },
+  }));
+}
+
+const { lang, slug } = Astro.params;
+
+if (!lang || !SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage) || !slug) {
+  return Astro.redirect(`/${SUPPORTED_LANGUAGES[0]}/`);
+}
+
+const locale = lang as SupportedLanguage;
+const entry = await getEntry(locale, slug);
+
+if (!entry) {
+  return new globalThis.Response(null, { status: 404 });
+}
+
+const post = mapEntryToPost(entry);
+const { Content, headings } = await entry.render();
+const translation = await getTranslation(post.slug, locale);
+const adjacent = await getAdjacentPosts(post.slug, locale);
+const site = Astro.site ?? new globalThis.URL('https://blog.chatollama.com');
+const canonical = new globalThis.URL(post.url, site).toString();
+const imageUrl = new globalThis.URL(post.image ?? '/og-default.png', site).toString();
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  description: post.description,
+  datePublished: post.publishDate.toISOString(),
+  dateModified: (post.updatedDate ?? post.publishDate).toISOString(),
+  inLanguage: post.lang === 'zh' ? 'zh-CN' : 'en-US',
+  image: imageUrl,
+  mainEntityOfPage: canonical,
+  url: canonical,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Chat Ollama',
+    url: site.toString(),
+  },
+};
+
+const languageLinks = SUPPORTED_LANGUAGES.map((code) => ({
+  lang: code,
+  href:
+    code === locale
+      ? post.url
+      : translation && translation.lang === code
+        ? translation.url
+        : `/${code}/`,
+  label: code === 'zh' ? '中文' : 'EN',
+  active: code === locale,
+}));
+---
+<BaseLayout
+  title={post.title}
+  description={post.description}
+  lang={locale}
+  languageLinks={languageLinks}
+  image={post.image ?? '/og-default.png'}
+  ogType="article"
+>
+  <Fragment slot="head">
+    <meta property="article:published_time" content={post.publishDate.toISOString()} />
+    <meta property="article:modified_time" content={(post.updatedDate ?? post.publishDate).toISOString()} />
+    {post.tags.length > 0 && post.tags.map((tag) => <meta property="article:tag" content={tag} />)}
+    <meta name="twitter:creator" content="@chatollama" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+  </Fragment>
+  <PostLayout
+    post={post}
+    translationHref={translation?.url}
+    Content={Content}
+    headings={headings}
+    adjacent={adjacent}
+  />
+</BaseLayout>

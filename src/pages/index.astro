@@ -1,0 +1,6 @@
+---
+import { SUPPORTED_LANGUAGES } from '../utils/posts';
+
+const defaultLocale = SUPPORTED_LANGUAGES[0];
+Astro.redirect(`/${defaultLocale}/`);
+---
