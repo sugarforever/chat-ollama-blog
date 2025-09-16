@@ -68,6 +68,10 @@ const metaDescription = description || t('meta.description');
       </footer>
     </div>
   </body>
+  <script>
+    import { inject } from '@vercel/analytics';
+    inject();
+  </script>
 </html>
 
 <style is:global>
