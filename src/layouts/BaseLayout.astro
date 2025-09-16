@@ -1,114 +1,77 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import type { SupportedLanguage } from '../utils/posts';
-import { SUPPORTED_LANGUAGES } from '../utils/posts';
-import type { LanguageLink } from '../types/navigation';
-import '../styles/global.css';
+import { getLangFromUrl, useTranslations } from '@/utils/i18n';
+import '@/styles/global.css';
 
-interface Props {
-  title?: string;
+export interface Props {
+  title: string;
   description?: string;
-  lang?: SupportedLanguage;
-  languageLinks?: LanguageLink[];
-  image?: string;
-  ogType?: 'website' | 'article';
-  noIndex?: boolean;
 }
 
-const {
-  title,
-  description,
-  lang = 'en',
-  languageLinks = [],
-  image,
-  ogType = 'website',
-  noIndex = false,
-} = Astro.props;
-
-const metaTitle = title ? `${title} | Chat Ollama` : 'Chat Ollama Engineering Log';
-const metaDescription =
-  description ??
-  (lang === 'zh'
-    ? 'Chat Ollama 的产品与工程更新。'
-    : 'Engineering updates and product deep-dives from the Chat Ollama team.');
-const canonicalUrl = Astro.site ? new globalThis.URL(Astro.url.pathname, Astro.site).toString() : undefined;
-const canonicalImage = image
-  ? Astro.site
-    ? new globalThis.URL(image, Astro.site).toString()
-    : image
-  : Astro.site
-    ? new globalThis.URL('/og-default.png', Astro.site).toString()
-    : '/og-default.png';
-const rssHref = Astro.site ? new globalThis.URL('/rss.xml', Astro.site).toString() : '/rss.xml';
+const { title, description } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const metaDescription = description || t('meta.description');
 ---
-<!DOCTYPE html>
-<html lang={lang} data-theme="dark" data-color-theme="dark">
+
+<!doctype html>
+<html lang={lang} class="h-full">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
     <meta name="description" content={metaDescription} />
-    {noIndex && <meta name="robots" content="noindex, nofollow" />}
-    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-    {Astro.site && languageLinks.length > 0 && (
-      <>
-        {languageLinks.map((link) => (
-          <link
-            rel="alternate"
-            hreflang={link.lang === 'zh' ? 'zh-CN' : 'en'}
-            href={new globalThis.URL(link.href, Astro.site).toString()}
-          />
-        ))}
-        <link
-          rel="alternate"
-          hreflang="x-default"
-          href={new globalThis.URL(`/${SUPPORTED_LANGUAGES[0]}/`, Astro.site).toString()}
-        />
-      </>
-    )}
-    <link rel="alternate" type="application/rss+xml" title="Chat Ollama Blog" href={rssHref} />
-    <meta property="og:title" content={metaTitle} />
-    <meta property="og:description" content={metaDescription} />
-    <meta property="og:locale" content={lang === 'zh' ? 'zh-CN' : 'en-US'} />
-    <meta property="og:site_name" content="Chat Ollama" />
-    <meta property="og:type" content={ogType} />
-    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
-    <meta property="og:image" content={canonicalImage} />
-    <meta property="og:image:width" content="2400" />
-    <meta property="og:image:height" content="1260" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={metaTitle} />
-    <meta name="twitter:description" content={metaDescription} />
-    <meta name="twitter:image" content={canonicalImage} />
-    <title>{metaTitle}</title>
-    <slot name="head" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <script is:inline>
-      (function () {
-        const storageKey = 'chat-ollama-theme';
-        try {
-          const stored = localStorage.getItem(storageKey);
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const theme = stored ?? (prefersDark ? 'dark' : 'light');
-          document.documentElement.dataset.theme = theme;
-          document.documentElement.dataset.colorTheme = theme;
-        } catch (error) {
-          document.documentElement.dataset.theme = 'dark';
-          document.documentElement.dataset.colorTheme = 'dark';
-        }
-      })();
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <title>{title}</title>
   </head>
-  <body class="flex min-h-screen flex-col bg-background text-text">
-    <Header lang={lang} languageLinks={languageLinks} />
-    <main class="mx-auto w-full max-w-6xl flex-1 px-6 pt-16">
-      <slot />
-    </main>
-    <Footer lang={lang} />
+  <body class="h-full bg-white text-black font-sans antialiased">
+    <div class="min-h-full flex flex-col">
+      <header class="border-b border-gray-200">
+        <nav class="max-w-4xl mx-auto px-6 py-4">
+          <div class="flex items-center justify-between">
+            <a href="https://chatollama.cloud" target="_blank" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+              <img src="/logo.svg" alt="ChatOllama" class="h-8 w-auto" />
+              <span class="text-lg font-semibold">ChatOllama</span>
+            </a>
+
+            <div class="flex items-center space-x-6">
+              <a href={lang === 'en' ? '/' : '/zh'} class="hover:text-gray-600 transition-colors">
+                {t('nav.home')}
+              </a>
+              <a href={lang === 'en' ? '/blog' : '/zh/blog'} class="hover:text-gray-600 transition-colors">
+                {t('nav.blog')}
+              </a>
+              <a href="https://chatollama.cloud" target="_blank" class="hover:text-gray-600 transition-colors">
+                {t('nav.project')}
+              </a>
+
+              <!-- Language switcher -->
+              <a
+                href={lang === 'en' ? '/zh' + Astro.url.pathname : Astro.url.pathname.replace('/zh', '')}
+                class="text-sm px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+              >
+                {lang === 'en' ? '中文' : 'EN'}
+              </a>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <main class="flex-1">
+        <slot />
+      </main>
+
+      <footer class="border-t border-gray-200 mt-auto">
+        <div class="max-w-4xl mx-auto px-6 py-8">
+          <div class="text-center text-sm text-gray-600">
+            © {new Date().getFullYear()} <a href="https://chatollama.cloud" target="_blank" class="hover:text-black transition-colors">ChatOllama</a>. Open source chatbot platform.
+          </div>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>
+
+<style is:global>
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { formatDate, getLangFromUrl, useTranslations, type Locale } from '@/utils/i18n';
+
+export interface Props {
+  title: string;
+  date: Date;
+  feature?: string;
+  timeToShip?: string;
+  description?: string;
+}
+
+const { title, date, feature, timeToShip, description } = Astro.props;
+const lang = getLangFromUrl(Astro.url) as Locale;
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="max-w-4xl mx-auto px-6 py-12">
+    <header class="mb-12">
+      <h1 class="text-4xl font-bold mb-4 leading-tight">{title}</h1>
+
+      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6">
+        <time datetime={date.toISOString()}>
+          {t('blog.publishedOn')} {formatDate(date, lang)}
+        </time>
+        {feature && (
+          <span class="px-2 py-1 bg-gray-100 rounded text-xs">
+            {feature}
+          </span>
+        )}
+        {timeToShip && (
+          <span class="px-2 py-1 bg-gray-100 rounded text-xs">
+            {timeToShip}
+          </span>
+        )}
+      </div>
+    </header>
+
+    <div class="prose prose-lg max-w-none">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose {
+    @apply text-gray-800 leading-relaxed;
+  }
+
+  .prose h1 {
+    @apply text-3xl font-bold mt-12 mb-6 text-black;
+  }
+
+  .prose h2 {
+    @apply text-2xl font-semibold mt-10 mb-4 text-black;
+  }
+
+  .prose h3 {
+    @apply text-xl font-semibold mt-8 mb-3 text-black;
+  }
+
+  .prose p {
+    @apply mb-6;
+  }
+
+  .prose a {
+    @apply text-black underline decoration-gray-400 hover:decoration-black transition-colors;
+  }
+
+  .prose ul, .prose ol {
+    @apply mb-6 pl-6;
+  }
+
+  .prose li {
+    @apply mb-2;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic text-gray-700 my-6;
+  }
+
+  .prose code {
+    @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+  }
+
+  .prose pre {
+    @apply bg-gray-50 border border-gray-200 rounded-lg p-4 overflow-x-auto my-6;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
+</style>

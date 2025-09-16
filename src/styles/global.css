@@ -2,86 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --color-background: #0b0f17;
-  --color-card: #151a23;
-  --color-primary: #111827;
-  --color-accent: #10b981;
-  --color-highlight: #f59e0b;
-  --color-surface: #e2e8f0;
-  --color-text: #e2e8f0;
-  --color-muted: #94a3b8;
-  --color-overlay: rgba(15, 23, 42, 0.45);
-  --color-border: #1f2937;
-  --color-success: #22c55e;
-  --color-danger: #f97316;
-  --color-code-bg: #112024;
-  --color-pre-bg: #111827;
-  color-scheme: dark;
-}
-
-[data-theme='light'] {
-  --color-background: #f8fafc;
-  --color-card: #ffffff;
-  --color-primary: #1e293b;
-  --color-accent: #0f766e;
-  --color-highlight: #ea580c;
-  --color-surface: #0f172a;
-  --color-text: #0f172a;
-  --color-muted: #475569;
-  --color-overlay: rgba(15, 23, 42, 0.15);
-  --color-border: #e2e8f0;
-  --color-success: #059669;
-  --color-danger: #dc2626;
-  --color-code-bg: #f1f5f9;
-  --color-pre-bg: #f8fafc;
-  color-scheme: light;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 html {
-  min-height: 100%;
-  background: var(--color-background);
-  scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
-body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: var(--color-text);
-  background: linear-gradient(160deg, rgba(17, 24, 39, 0.9), rgba(11, 15, 23, 0.95));
-  min-height: 100vh;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-a {
-  color: inherit;
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-.glass-surface {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(18px);
-  border: 1px solid var(--color-border);
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
 }
 
-[data-theme='light'] .glass-surface {
-  background: rgba(255, 255, 255, 0.85);
-}
-
-.prose pre {
-  overflow: auto;
-}
-
-.prose pre code {
-  display: grid;
-}
-
-.prose code::before,
-.prose code::after {
-  display: none;
-}
-
-@layer base {
-  h1,h2,h3,h4,h5,h6 {
-    font-family: 'Clash Display', 'Space Grotesk', var(--font-sans), sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
