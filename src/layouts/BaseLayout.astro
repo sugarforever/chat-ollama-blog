@@ -19,8 +19,37 @@ const metaDescription = description || t('meta.description');
     <meta charset="UTF-8" />
     <meta name="description" content={metaDescription} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+
+    <!-- SEO Meta Tags -->
     <title>{title}</title>
+    <meta name="author" content="ChatOllama Team" />
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="ChatOllama, AI, chatbot, open source, artificial intelligence, machine learning, blog" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:image" content={new URL('/logo.svg', Astro.url)} />
+    <meta property="og:site_name" content="ChatOllama Blog" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={metaDescription} />
+    <meta property="twitter:image" content={new URL('/logo.svg', Astro.url)} />
+    <meta property="twitter:creator" content="@ChatOllama" />
+    <meta property="twitter:site" content="@ChatOllama" />
+
+    <!-- Additional SEO -->
+    <link rel="canonical" href={Astro.url} />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="apple-touch-icon" href="/logo.svg" />
   </head>
   <body class="h-full bg-white text-black font-sans antialiased">
     <div class="min-h-full flex flex-col">
