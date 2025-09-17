@@ -11,6 +11,11 @@ const { title, description } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const metaDescription = description || t('meta.description');
+
+// Use the configured site URL for production, fallback to Astro.url for development
+const siteUrl = import.meta.env.SITE || Astro.site || Astro.url.origin;
+const currentUrl = new URL(Astro.url.pathname, siteUrl);
+const imageUrl = new URL('/logo.svg', siteUrl);
 ---
 
 <!doctype html>
@@ -28,23 +33,23 @@ const metaDescription = description || t('meta.description');
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
+    <meta property="og:url" content={currentUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={metaDescription} />
-    <meta property="og:image" content={new URL('/logo.svg', Astro.url)} />
+    <meta property="og:image" content={imageUrl} />
     <meta property="og:site_name" content="ChatOllama Blog" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:url" content={currentUrl} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={metaDescription} />
-    <meta property="twitter:image" content={new URL('/logo.svg', Astro.url)} />
+    <meta property="twitter:image" content={imageUrl} />
     <meta property="twitter:creator" content="@ChatOllama" />
     <meta property="twitter:site" content="@ChatOllama" />
 
     <!-- Additional SEO -->
-    <link rel="canonical" href={Astro.url} />
+    <link rel="canonical" href={currentUrl} />
     <meta name="theme-color" content="#000000" />
 
     <!-- Favicon -->
@@ -58,14 +63,14 @@ const metaDescription = description || t('meta.description');
           <div class="flex items-center justify-between">
             <a href="https://chatollama.cloud" target="_blank" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
               <img src="/logo.svg" alt="ChatOllama" class="h-8 w-auto" />
-              <span class="text-lg font-semibold">ChatOllama</span>
+              <span class="text-lg font-semibold hidden sm:block">ChatOllama</span>
             </a>
 
-            <div class="flex items-center space-x-6">
-              <a href={lang === 'en' ? '/' : '/zh'} class="hover:text-gray-600 transition-colors">
+            <div class="flex items-center space-x-4 md:space-x-6">
+              <a href={lang === 'en' ? '/' : '/zh'} class="hover:text-gray-600 transition-colors hidden sm:block">
                 {t('nav.home')}
               </a>
-              <a href={lang === 'en' ? '/blog' : '/zh/blog'} class="hover:text-gray-600 transition-colors">
+              <a href={lang === 'en' ? '/blog' : '/zh/blog'} class="hover:text-gray-600 transition-colors hidden sm:block">
                 {t('nav.blog')}
               </a>
               <a href="https://chatollama.cloud" target="_blank" class="hover:text-gray-600 transition-colors">
@@ -75,9 +80,10 @@ const metaDescription = description || t('meta.description');
               <!-- Language switcher -->
               <a
                 href={lang === 'en' ? '/zh' + Astro.url.pathname : Astro.url.pathname.replace('/zh', '')}
-                class="text-sm px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+                class="text-sm font-medium px-2 py-1 hover:bg-gray-100 rounded transition-colors"
+                title={lang === 'en' ? 'Switch to Chinese' : 'Switch to English'}
               >
-                {lang === 'en' ? '中文' : 'EN'}
+                {lang === 'en' ? '中' : 'EN'}
               </a>
             </div>
           </div>

@@ -17,7 +17,7 @@ const posts = await getBlogPosts('en');
       </p>
     </header>
 
-    <div class="grid gap-6 md:grid-cols-2">
+    <div class="space-y-6">
       {posts.map((post) => (
         <BlogCard post={post} />
       ))}
