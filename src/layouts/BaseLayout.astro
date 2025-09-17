@@ -15,7 +15,7 @@ const metaDescription = description || t('meta.description');
 // Use the configured site URL for production, fallback to Astro.url for development
 const siteUrl = import.meta.env.SITE || Astro.site || Astro.url.origin;
 const currentUrl = new URL(Astro.url.pathname, siteUrl);
-const imageUrl = new URL('/logo.svg', siteUrl);
+const imageUrl = new URL('/social_share.png', siteUrl);
 ---
 
 <!doctype html>
