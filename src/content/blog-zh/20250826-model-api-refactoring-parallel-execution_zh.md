@@ -1,6 +1,6 @@
 ---
 title: "模型API重构：实现并行执行和正确的Gemini集成"
-date: "2025-01-01"
+date: "2025-08-26"
 description: "Blog post about 模型API重构：实现并行执行和正确的Gemini集成"
 ---
 

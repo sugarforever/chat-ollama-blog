@@ -1,6 +1,6 @@
 ---
 title: "ChatOllama 集成 DeepAgents：为开源 AI 聊天带来深度研究能力"
-date: "2025-01-01"
+date: "2025-08-19"
 description: "Blog post about ChatOllama 集成 DeepAgents：为开源 AI 聊天带来深度研究能力"
 ---
 

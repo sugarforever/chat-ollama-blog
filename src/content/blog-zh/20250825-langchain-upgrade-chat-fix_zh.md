@@ -1,6 +1,6 @@
 ---
 title: "LangChain 核心包版本升级导致聊天功能中断：快速修复记录"
-date: "2025-01-01"
+date: "2025-08-25"
 description: "Blog post about LangChain 核心包版本升级导致聊天功能中断：快速修复记录"
 ---
 

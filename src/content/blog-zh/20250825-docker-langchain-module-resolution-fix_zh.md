@@ -1,6 +1,6 @@
 ---
 title: "修复 Docker 模块解析错误：LangChain 依赖项调查"
-date: "2025-01-01"
+date: "2025-08-25"
 description: "Blog post about 修复 Docker 模块解析错误：LangChain 依赖项调查"
 ---
 

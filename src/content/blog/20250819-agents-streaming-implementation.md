@@ -1,7 +1,7 @@
 ---
-title: "20250819 - 🧠🤖 DeepAgents Integration: AI Agents Streaming Implementation & UI Enhancement"
-date: "2025-01-01"
-description: "Blog post about 20250819 - 🧠🤖 DeepAgents Integration: AI Agents Streaming Implementation & UI Enhancement"
+title: "DeepAgents Integration: AI Agents Streaming Implementation & UI Enhancement"
+date: "2025-08-19"
+description: "DeepAgents integration into ChatOllama with AI agents streaming implementation and UI enhancements"
 ---
 
 

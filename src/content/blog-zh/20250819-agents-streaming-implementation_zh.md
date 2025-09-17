@@ -1,6 +1,6 @@
 ---
 title: "20250819 - 🧠🤖 DeepAgents 集成：AI 智能体流式实现与 UI 增强"
-date: "2025-01-01"
+date: "2025-08-19"
 description: "Blog post about 20250819 - 🧠🤖 DeepAgents 集成：AI 智能体流式实现与 UI 增强"
 ---
 

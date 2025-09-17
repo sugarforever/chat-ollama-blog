@@ -1,7 +1,7 @@
 ---
 title: "OpenAI-Compatible Image Parsing: Fixing LangChain Streaming Limitations"
-date: "2025-01-01"
-description: "Blog post about OpenAI-Compatible Image Parsing: Fixing LangChain Streaming Limitations"
+date: "2025-08-28"
+description: "Fixing OpenAI-compatible image parsing issues in LangChain streaming responses"
 ---
 
 

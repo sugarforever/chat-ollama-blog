@@ -1,7 +1,7 @@
 ---
 title: "LangChain Core Package Upgrade Breaks Chat: A Quick Fix Story"
-date: "2025-01-01"
-description: "Blog post about LangChain Core Package Upgrade Breaks Chat: A Quick Fix Story"
+date: "2025-08-25"
+description: "How a routine LangChain upgrade broke chat functionality and our quick fix solution"
 ---
 
 

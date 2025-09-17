@@ -1,7 +1,7 @@
 ---
 title: "界面优化与聊天可靠性修复"
-date: "2025-01-01"
-description: "Blog post about 界面优化与聊天可靠性修复"
+date: "2025-08-18"
+description: "ChatOllama界面优化和聊天功能可靠性修复"
 ---
 
 

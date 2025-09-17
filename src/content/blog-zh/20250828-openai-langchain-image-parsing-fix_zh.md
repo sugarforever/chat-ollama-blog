@@ -1,6 +1,6 @@
 ---
 title: "OpenAI 兼容图像解析：修复 LangChain 流式响应限制"
-date: "2025-01-01"
+date: "2025-08-28"
 description: "Blog post about OpenAI 兼容图像解析：修复 LangChain 流式响应限制"
 ---
 

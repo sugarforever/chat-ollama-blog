@@ -1,7 +1,7 @@
 ---
 title: "Fixing Docker Module Resolution Error: LangChain Dependencies Investigation"
-date: "2025-01-01"
-description: "Blog post about Fixing Docker Module Resolution Error: LangChain Dependencies Investigation"
+date: "2025-08-25"
+description: "Fixing Docker module resolution errors with LangChain dependencies and version conflicts"
 ---
 
 

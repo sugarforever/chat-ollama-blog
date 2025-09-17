@@ -1,6 +1,6 @@
 ---
 title: "在 Docker 中启用功能开关：为什么 MCP_ENABLED 没生效？如何修复？"
-date: "2025-01-01"
+date: "2025-08-19"
 description: "Blog post about 在 Docker 中启用功能开关：为什么 MCP_ENABLED 没生效？如何修复？"
 ---
 

@@ -1,7 +1,7 @@
 ---
-title: "Feature Flags in Docker: Why MCP_ENABLED Didn’t Work and How We Fixed It"
-date: "2025-01-01"
-description: "Blog post about Feature Flags in Docker: Why MCP_ENABLED Didn’t Work and How We Fixed It"
+title: "Feature Flags in Docker: Why MCP_ENABLED Didn't Work and How We Fixed It"
+date: "2025-08-19"
+description: "Troubleshooting and fixing MCP feature flags that work in development but fail in Docker containers"
 ---
 
 
