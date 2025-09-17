@@ -1,7 +1,7 @@
 ---
 title: "ChatOllama Integrates DeepAgents: Bringing Deep Research Capabilities to Open Source AI Chat"
 date: "2025-08-19"
-description: "How we integrated DeepAgents into ChatOllama to provide powerful deep research capabilities for our open source AI chat application"
+description: "Exciting update as ChatOllama integrates DeepAgents to provide powerful deep research capabilities for our open source AI chat application"
 ---
 
 Hello everyone! Today I want to share an exciting update — I've integrated DeepAgents into ChatOllama, bringing powerful deep research capabilities to our open source AI chat application.
@@ -12,229 +12,86 @@ Before diving in, let me introduce DeepAgents. Traditional AI agents typically u
 
 DeepAgents changes this paradigm. Drawing inspiration from successful applications like Claude Code and Deep Research, it builds truly "deep" agents through four core components:
 
-### 1. **Planning Module** 🧠
-- **Task Decomposition**: Breaks complex research questions into manageable sub-tasks
-- **Strategy Selection**: Chooses optimal approaches based on task characteristics
-- **Resource Assessment**: Evaluates required tools and information sources
+- **🎯 Planning Tools**: Help agents develop and track structured plans
+- **🤖 Sub-agents**: Specialized for specific tasks, providing context isolation
+- **📁 File System**: Provides persistent state management
+- **📝 Refined Prompts**: System prompts optimized based on successful cases
 
-### 2. **Tool Integration** 🔧
-- **Web Search**: Real-time information gathering from multiple sources
-- **Document Processing**: Analysis of uploaded files and documents
-- **API Integration**: Connection to external services and databases
-- **Code Execution**: Running analysis scripts and data processing
+This architecture enables agents to work like human researchers: decomposing complex problems, developing research plans, calling specialized tools, organizing and analyzing information, and ultimately producing high-quality research reports.
 
-### 3. **Memory System** 💾
-- **Context Persistence**: Maintains conversation context across long research sessions
-- **Information Synthesis**: Combines findings from multiple sources intelligently
-- **Progress Tracking**: Monitors research progress and adjusts strategies
+## Why Integrate with ChatOllama?
 
-### 4. **Quality Control** ✅
-- **Source Verification**: Cross-references information from multiple sources
-- **Fact Checking**: Validates claims against reliable databases
-- **Bias Detection**: Identifies potential biases in research findings
+As an open source project focused on localized AI experiences, ChatOllama has always been committed to providing users with powerful yet easy-to-use AI tools. The addition of DeepAgents allows us to:
 
-## Integration Architecture
+### 1. **Provide Professional-Grade Research Capabilities**
+Users can now conduct deep research directly in ChatOllama, with agents automatically:
+- Developing research plans
+- Searching for relevant information
+- Analyzing and integrating data
+- Generating structured reports
 
-### System Design
-
-The ChatOllama-DeepAgents integration follows a modular architecture:
-
-```typescript
-interface DeepAgentConfig {
-  tools: ToolDefinition[];
-  instructions: string;
-  model: ChatModel;
-  subAgents?: SubAgent[];
-  memoryConfig: MemorySettings;
-}
-
-class ChatOllamaAgent {
-  constructor(private config: DeepAgentConfig) {
-    this.initializeAgent();
-  }
-
-  async processResearchQuery(query: string): Promise<ResearchResult> {
-    const plan = await this.createResearchPlan(query);
-    const results = await this.executeResearch(plan);
-    return this.synthesizeFindings(results);
-  }
-}
+### 2. **Seamless MCP Integration**
+DeepAgents natively supports MCP (Model Context Protocol), making the integration process exceptionally smooth. We only need:
+```javascript
+// Simple integration code
+const agent = createDeepAgent({
+  tools: mcpTools,
+  instructions: researchInstructions
+})
 ```
 
-### Key Features
+### 3. **Maintaining Open Source Spirit**
+DeepAgents itself is open source, perfectly aligning with ChatOllama's philosophy. Users have complete control over their data and research processes.
 
-#### 1. **Streaming Research Process**
-Users can watch the agent work in real-time:
-- Planning phase visualization
-- Tool execution progress
-- Incremental result presentation
-- Error handling and recovery
+## Technical Implementation Highlights
 
-#### 2. **Multi-Modal Research**
-- **Text Analysis**: Processing documents, articles, and reports
-- **Data Analysis**: Working with structured data and statistics
-- **Code Analysis**: Understanding and debugging code repositories
-- **Image Analysis**: Extracting insights from charts and diagrams
+### Intelligent Streaming Processing
+We implemented server-side intelligent content processing to ensure:
+- AI response content accumulates on the server side, avoiding complex client-side logic
+- Each conversation turn uses unique UUIDs for grouping, maintaining clear context
+- Tool call results are displayed in collapsible UI components for better user experience
 
-#### 3. **Collaborative Research**
-- **Session Sharing**: Multiple users can collaborate on research projects
-- **Progress Tracking**: Team members can see research progress
-- **Result Compilation**: Automatic report generation from research findings
+### Tool Call Visualization
+When agents use tools, users can clearly see:
+- Which tool was called (search, browser, file operations, etc.)
+- Tool execution results
+- Expandable detailed information
 
-## Use Cases
+### Multi-language Support
+We added complete Chinese and English support for the new feature, ensuring good experiences for users of different languages.
 
-### 1. **Academic Research**
-- Literature review compilation
-- Cross-reference verification
-- Citation analysis
-- Trend identification
+## Real Usage Scenarios
 
-### 2. **Market Research**
-- Competitive analysis
-- Industry trend analysis
-- Customer sentiment analysis
-- Market opportunity assessment
+Imagine these use cases:
 
-### 3. **Technical Investigation**
-- Technology stack evaluation
-- Security vulnerability research
-- Performance analysis
-- Best practice compilation
+**Academic Research**: Ask "Help me research quantum computing applications in cryptography," and the agent will automatically search for latest papers, analyze technology trends, and organize key insights.
 
-### 4. **Creative Research**
-- Content ideation
-- Trend analysis for creative projects
-- Inspiration gathering
-- Style analysis
+**Market Analysis**: Request "Analyze the competitive landscape of the AI chip market in 2024," and the agent will collect market data, analyze competitors, and generate detailed reports.
 
-## Implementation Highlights
+**Technical Investigation**: Ask "Compare different container orchestration solutions," and the agent will research the pros and cons of various solutions, use cases, and best practices.
 
-### Smart Tool Selection
+## Development Experience
 
-```typescript
-class ToolOrchestrator {
-  async selectOptimalTools(query: string): Promise<Tool[]> {
-    const queryType = await this.classifyQuery(query);
-    const availableTools = this.getAvailableTools();
+Thanks to DeepAgents' excellent architectural design and MCP standardization, the entire integration process was very smooth:
 
-    switch (queryType) {
-      case 'factual':
-        return [webSearch, knowledgeBase, factChecker];
-      case 'analytical':
-        return [dataProcessor, webSearch, calculator];
-      case 'creative':
-        return [webSearch, imageSearch, trendAnalyzer];
-      default:
-        return this.getDefaultToolset();
-    }
-  }
-}
-```
+1. **Quick Integration**: Enable deep research functionality with just a few lines of code
+2. **Flexible Configuration**: Adjust agent instructions and tools as needed
+3. **Easy Extension**: Easily add new tools and capabilities through MCP
 
-### Progressive Result Building
+## Future Outlook
 
-```typescript
-class ResearchOrchestrator {
-  async conductResearch(query: string): Promise<ResearchResult> {
-    const findings = [];
+This is just the beginning. Next, we plan to:
+- Add more professional domain research templates
+- Support custom research workflows
+- Integrate more professional tools and data sources
+- Optimize performance for long-duration research tasks
 
-    // Phase 1: Initial information gathering
-    const initialResults = await this.gatherInitialData(query);
-    findings.push(...initialResults);
+## Summary
 
-    // Phase 2: Deep dive based on initial findings
-    const deepResults = await this.conductDeepAnalysis(initialResults);
-    findings.push(...deepResults);
+The integration of DeepAgents brings a qualitative leap to ChatOllama. We're no longer just a simple chat tool, but have become a powerful research assistant. This capability enhancement, combined with our open source nature and localization advantages, makes ChatOllama more competitive in the AI application space.
 
-    // Phase 3: Synthesis and validation
-    const synthesized = await this.synthesizeFindings(findings);
-    const validated = await this.validateFindings(synthesized);
-
-    return this.formatFinalReport(validated);
-  }
-}
-```
-
-## User Experience
-
-### Research Workflow
-
-1. **Query Input**: Users describe their research need in natural language
-2. **Plan Review**: Agent presents research plan for user approval
-3. **Live Execution**: Users watch the research process unfold
-4. **Iterative Refinement**: Users can guide the research direction
-5. **Result Compilation**: Comprehensive report with sources and analysis
-
-### Interface Design
-
-- **Clean, Minimal UI**: Focus on content, not clutter
-- **Progress Indicators**: Clear visualization of research phases
-- **Source Attribution**: All findings linked to original sources
-- **Export Options**: Results available in multiple formats
-
-## Results and Impact
-
-### Performance Metrics
-- **Research Quality**: 85% user satisfaction with result comprehensiveness
-- **Time Efficiency**: 60% reduction in manual research time
-- **Source Diversity**: Average of 12 sources per research session
-- **Accuracy Rate**: 92% fact-checking accuracy
-
-### User Feedback
-- *"Like having a research assistant that never sleeps"*
-- *"Finally, an AI that can handle complex, multi-step investigations"*
-- *"The source attribution is fantastic for academic work"*
-
-## Technical Challenges and Solutions
-
-### 1. **Information Overload**
-**Challenge**: Processing and prioritizing vast amounts of information
-**Solution**: Relevance scoring algorithm and progressive filtering
-
-### 2. **Source Reliability**
-**Challenge**: Ensuring information quality and accuracy
-**Solution**: Multi-source verification and credibility scoring
-
-### 3. **Context Management**
-**Challenge**: Maintaining context across long research sessions
-**Solution**: Hierarchical memory system with intelligent context pruning
-
-### 4. **User Guidance**
-**Challenge**: Balancing automation with user control
-**Solution**: Interactive planning phase with approval gates
-
-## Future Roadmap
-
-### Short Term (Q4 2025)
-- **Enhanced Tool Library**: More specialized research tools
-- **Better Visualization**: Interactive charts and graphs
-- **Team Collaboration**: Real-time collaborative research
-
-### Medium Term (2026)
-- **Custom Agent Training**: User-specific agent personalities
-- **API Integrations**: Direct connection to academic databases
-- **Advanced Analytics**: Predictive research insights
-
-### Long Term (2027+)
-- **Autonomous Research**: Fully self-directed research agents
-- **Cross-Language Research**: Seamless multilingual capabilities
-- **Domain Expertise**: Specialized agents for specific fields
-
-## Getting Started
-
-To try DeepAgents in ChatOllama:
-
-1. **Enable Agents**: Go to Settings → Features → Enable Agents
-2. **Configure Tools**: Set up required API keys (search, documents)
-3. **Start Research**: Use `/research` command or click "Deep Research"
-4. **Iterate**: Refine your queries based on initial results
-
-## Conclusion
-
-The integration of DeepAgents into ChatOllama represents a significant step forward in making advanced AI research capabilities accessible to everyone. By combining the power of deep agent architecture with ChatOllama's user-friendly interface, we've created a tool that democratizes comprehensive research.
-
-Whether you're a student working on a thesis, a professional conducting market research, or simply someone curious about the world, ChatOllama with DeepAgents is ready to be your intelligent research partner.
+If you're interested in this feature, welcome to try the latest version of ChatOllama and experience the charm of AI deep research. We also welcome feedback on GitHub to help us make this feature even better!
 
 ---
 
-*The future of AI assistance isn't just about answering questions — it's about helping humans explore, discover, and understand complex topics with unprecedented depth and accuracy.*
+*ChatOllama is an open source local AI chat application committed to providing users with private, powerful, and easy-to-use AI experiences.*
